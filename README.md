@@ -80,14 +80,12 @@ def chat(query: str = Form(...), email: str = Form(...)):
 def health():
     return {"status": "ok", "active_users": len(user_sessions)}
 
-# --- Start server in background ---
 def run_app():
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 thread = threading.Thread(target=run_app)
 thread.start()
 
-# --- Create ngrok tunnel ---
 ngrok.set_auth_token("YOUR_NGROK_AUTHTOKEN_HERE")
 public_url = ngrok.connect(8000)
 print("🚀 Public URL:", public_url)
